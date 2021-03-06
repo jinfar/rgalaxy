@@ -1,7 +1,7 @@
 
 
 struct Shar {
-    massa: f64,
+    pub massa: f64,
     x: f64,
     y: f64,
     velx: f64,
@@ -42,7 +42,7 @@ impl Shar{
         self.accy = 0.0;    
     }
 
-    fn show(&self) -> (f64, f64, f64, f64, f64, f64 , f64){
+    pub fn show(&self) -> (f64, f64, f64, f64, f64, f64 , f64){
         (self.massa, self.x, self.y, self.velx, self.vely, self.accy, self.accy)
     }
 
@@ -61,4 +61,24 @@ pub fn run(){
     sun.update(1.0);
     println!("massa solnca {:?}", sun.show());
     println!("massa solnca {:?}", luna.show());
+}
+
+// pub fn generate(times: i32) -> Vec<&'static mut Shar>{
+//     let Universe: Vec<&mut Shar>;
+//     for i in 1..times {
+//         let sun = &mut Shar::new(20.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0);
+//         Universe.push(sun);
+//         println!("{:?}", i);
+//     }
+//     return Universe
+// }
+pub fn generate(times: i32) -> Vec<i32> {
+    let mut universe = Vec::new();
+    for i in 1..times {
+        // let sun = &mut Shar::new(20.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0);
+        let sun = 43i32;
+        universe.push(sun);
+        println!("{:?}", i);
+    }
+    return universe
 }
