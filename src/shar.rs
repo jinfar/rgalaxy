@@ -1,6 +1,6 @@
 
 
-struct Shar {
+pub struct Shar {
     pub massa: f64,
     x: f64,
     y: f64,
@@ -72,11 +72,16 @@ pub fn run(){
 //     }
 //     return Universe
 // }
-pub fn generate(times: i32) -> Vec<i32> {
+
+// fn fill () -> Shar{
+//     Shar{}
+// }
+
+pub fn generate(times: i32) -> Vec<Shar> {
     let mut universe = Vec::new();
     for i in 1..times {
-        // let sun = &mut Shar::new(20.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0);
-        let sun = 43i32;
+        let mut sun = Shar::new(23.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0);
+        // let sun = 43i32;
         universe.push(sun);
         println!("{:?}", i);
     }
