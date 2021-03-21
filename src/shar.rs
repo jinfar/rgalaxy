@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+#![allow(unused_mut)]
+use rand::Rng;
 
 pub struct Shar {
     pub massa: f64,
@@ -42,7 +44,6 @@ impl Shar{
 pub fn run(){
     let mut luna = Shar{massa: 20.0, x: 410.0, y: 410.0, velx: 0.0, vely: 0.0, accx: 0.0, accy: 0.0};
     let mut sun = Shar{massa: 20.0, x: 400.0, y: 400.0, velx: 0.0, vely: 0.0, accx: 0.0, accy: 0.0};
-    // let mut luna = Shar{20.0, 410.0, 420.0, 0.0, 0.0, 0.0, 0.0};
     println!("massa solnca {:?}", sun.show());
     println!("massa solnca {:?}", luna.show());
     sun.pull_by(&luna);
@@ -71,12 +72,12 @@ pub fn run(){
 
 pub fn generate(times: i32) -> Vec<Shar> {
     let mut universe = Vec::new();
+    let mut rng = rand::thread_rng();
     for i in 1..times {
-        let mut sun = Shar{massa: 20.0, x: 400.0, y: 400.0, velx: 0.0, vely: 0.0, accx: 0.0, accy: 0.0};
-        // let mut sun = Shar(23.0, 400.0, 400.0, 0.0, 0.0, 0.0, 0.0);
-        // let sun = 43i32;
+        let massa = rng.gen_range(15.0..25.0);
+        println!("{:?}", massa);
+        let mut sun = Shar{massa: massa, x: 400.0, y: 400.0, velx: 0.0, vely: 0.0, accx: 0.0, accy: 0.0};
         universe.push(sun);
-        println!("{:?}", i);
     }
     return universe
 }
