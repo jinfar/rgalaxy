@@ -73,10 +73,19 @@ pub fn run(){
 pub fn generate(times: i32) -> Vec<Shar> {
     let mut universe = Vec::new();
     let mut rng = rand::thread_rng();
-    for i in 1..times {
-        let massa = rng.gen_range(15.0..25.0);
-        println!("{:?}", massa);
-        let mut sun = Shar{massa: massa, x: 400.0, y: 400.0, velx: 0.0, vely: 0.0, accx: 0.0, accy: 0.0};
+    let distr = rand_distr::Normal::new(0.0, 1.0).unwrap();
+    for i in 0..times {
+        // let massa = rng.gen_range(15.0..25.0);
+        // println!("{:?}", rng.sample(distr));
+        let mut sun = Shar{
+            massa: rng.gen_range(15.0..25.0), 
+            x: 400.0 + 20.0 * rng.sample(distr), 
+            y: 400.0 + 20.0 * rng.sample(distr), 
+            velx: rng.sample(distr), 
+            vely: rng.sample(distr), 
+            accx: 0.0, 
+            accy: 0.0
+        };
         universe.push(sun);
     }
     return universe
