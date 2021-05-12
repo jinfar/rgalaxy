@@ -5,13 +5,13 @@ use rand::Rng;
 
 #[derive(Copy, Clone)]
 pub struct Shar {
-    pub massa: f64,
-    pub x: f64,
-    pub y: f64,
-    pub velx: f64,
-    pub vely: f64,
-    pub accx: f64,
-    pub accy: f64,
+    pub massa: f32,
+    pub x: f32,
+    pub y: f32,
+    pub velx: f32,
+    pub vely: f32,
+    pub accx: f32,
+    pub accy: f32,
 }
 
 impl Shar{
@@ -24,7 +24,12 @@ impl Shar{
         }
     }
 
-    pub fn update(&mut self, time: f64) {
+    pub fn update(&mut self, time: f32) {
+        // let mut mtime: f32;
+        // match  time{
+        //     Some(time)  => mtime = time,
+        //     None => mtime = 1.0 as f32
+        // }
         self.velx += time*self.accx;
         self.vely += time*self.accy;
         self.x += time*self.velx;
@@ -49,22 +54,21 @@ pub struct Uni {
 
 
 impl Uni{
-    pub fn step(&mut self) {
+    pub fn step_o(&mut self) {
         self.body = step_f(self.body.clone());
         }
     
-    // pub fn step_o(&mut self){
-    //     let temp = &self.body.clone();
-    //     for mut sun in self.body.clone() {
-    //         for luna in temp {
-    //             sun.pull_by(luna);
-    //         }
-    //     }
-    //     for mut sun in temp {
-    //         let mut r = *sun;
-    //         r.update(1.0);
-    //     }    
-    // }
+    pub fn step(&mut self){
+        let temp = &self.body.clone();
+        for sun in &mut self.body {
+            for luna in temp {
+                sun.pull_by(luna);
+            }
+        }
+        for sun in &mut self.body {
+            sun.update(1.0);
+        }    
+    }
 
     // pub fn step_m(&mut self){
     //     let temp_body = self.body.clone();
@@ -75,7 +79,7 @@ impl Uni{
     //     }).collect::<Vec<Shar>>();
     // }
     
-    pub fn init(&mut self) {
+    pub fn reinit(&mut self) {
         self.body = generate(10);
     }
 
@@ -99,12 +103,10 @@ pub fn step_f(universe: Vec<Shar>) -> Vec<Shar>{
         }
         newverse.push(sun);
     }
-    let mut newverse2: Vec<Shar> = vec![];
-    for mut sun in newverse {
+    for sun in &mut newverse {
         sun.update(1.0);
-        newverse2.push(sun);
     }    
-    newverse2
+    newverse
 }
 
 pub fn generate(times: i32) -> Vec<Shar> {
