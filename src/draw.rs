@@ -5,30 +5,8 @@
 use crate::shar::{Shar, Uni};
 pub const CHARSET: [char; 10] = [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@'];
 pub const CHARSET_HD: [char; 70] = [' ', '.', '\'', '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$'];
-const MAX_MASS: f32 = 200f32;
-// pub fn to_char(tochki_x: Vec<f64>, tochki_y: Vec<f64>, massa: Vec<f64>) -> Vec<char>{
-//     let mut s = Vec::new();
-//     s.push(CHARSET[0]);
-//     s
-//     // return s
-// }
+const MAX_MASS: f32 = 10f32;
 
-// pub fn pr_plot(ch: char){
-//     for _ in 0..30{
-//         for _ in 0..70{
-//             print!("{}", ch)
-//         }
-//         print!("\n")
-//     }
-// }
-
-// pub fn convdr(data:Vec<Shar>){
-//     let plot_h_px = 400u32;
-//     let plot_w_px = 400u32;
-//     let plot_h_ch = 70u32;
-//     let plot_w_ch = 40u32;
-
-// }
 pub fn conv(data:Vec<Shar>) -> Vec<[f32; 3]>{
     let mut temp:[f32; 3] = [0.0,0.0,0.0];
     let mut itog: Vec<[f32; 3]> = vec![];
@@ -61,16 +39,14 @@ pub fn get_char(brightness: f32) -> char{
     char_set[(nom as usize )+ 1]
 }
 
-pub fn ris(data: Uni){
-    // let mut bukvi: Vec<char> = vec![];
+pub fn get_ris(data: Uni) -> Vec<String>{
+    let mut itog: Vec<String> = vec![];
     let plot_h_px = 400f32;
     let plot_w_px = 400f32;
-    let plot_h_ch = 70u32;
-    let plot_w_ch = 40u32;
+    let plot_h_ch = 200u32;
+    let plot_w_ch = 50u32;
     let min_y_gr  = 0f32;
     let min_x_gr  = 0f32;
-    // let cop_x  = 0f32;
-    // let cop_y  = 0f32;
     let mut br = 0f32;
     let mut ch;
     for row in 1..=plot_w_ch{
@@ -82,15 +58,12 @@ pub fn ris(data: Uni){
             let bol_gr_x = (col + 1)  as f32 * plot_h_px / plot_h_ch as f32;
             ch = conv(data.body.clone());
 
-            br = get_brightness( ch, mal_gr_x+200f32, bol_gr_x+200f32, mal_gr_y+200f32, bol_gr_y+200f32);
-            // println!("{:?}", br.clone());
+            br = get_brightness( ch, mal_gr_x+400f32, bol_gr_x+400f32, mal_gr_y+400f32, bol_gr_y+400f32);
             let cha = get_char(br);
             bukvi.push(cha);
-            // print!("{}", cha);
         }
-        println!("{}", bukvi.into_iter().collect::<String>());
-        // let mut bukvi = vec![];
-        // bukvi.push("\n");  
+        let d = format!("{}", bukvi.into_iter().collect::<String>());
+        itog.push(d);
     }
-    // print!("{}", bukvi.into_iter().collect());
+    itog
 }

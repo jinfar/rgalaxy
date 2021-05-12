@@ -97,11 +97,11 @@ pub fn generate(times: i32) -> Vec<Shar> {
     let distr = rand_distr::Normal::new(0.0, 1.0).unwrap();
     for _ in 0..times {
         let mut sun = Shar{
-            massa: rng.gen_range(15.0..35.0), 
+            massa: rng.gen_range(1.0..2.0), 
             x: 400.0 + 20.0 * rng.sample(distr), 
             y: 400.0 + 20.0 * rng.sample(distr), 
-            velx: rng.sample(distr), 
-            vely: rng.sample(distr), 
+            velx: rng.sample(distr)+20.5, 
+            vely: rng.sample(distr)+20.5, 
             accx: 0.0, 
             accy: 0.0
         };
