@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 // #![allow(unused_mut)]
 use rand::Rng;
-// use std::marker::Copy;
 
 #[derive(Copy, Clone)]
 pub struct Shar {
@@ -25,11 +24,6 @@ impl Shar{
     }
 
     pub fn update(&mut self, time: f32) {
-        // let mut mtime: f32;
-        // match  time{
-        //     Some(time)  => mtime = time,
-        //     None => mtime = 1.0 as f32
-        // }
         self.velx += time*self.accx;
         self.vely += time*self.accy;
         self.x += time*self.velx;
@@ -45,13 +39,10 @@ impl Shar{
         println!("acc: {:.2}, {:.2}", self.accx, self.accy);
     }
 }
-// #[derive(Clone)]
+#[derive(Clone)]
 pub struct Uni {
     pub body: Vec<Shar>
 }
-
-// impl Copy for Uni { }
-
 
 impl Uni{
     pub fn step_o(&mut self) {
@@ -70,15 +61,6 @@ impl Uni{
         }    
     }
 
-    // pub fn step_m(&mut self){
-    //     let temp_body = self.body.clone();
-    //     let m: Vec<Shar> = temp_body.into_iter().map(|sun| {
-    //         for luna in &temp_body{
-    //             sun.pull_by(luna);
-    //         }
-    //     }).collect::<Vec<Shar>>();
-    // }
-    
     pub fn reinit(&mut self) {
         self.body = generate(10);
     }
