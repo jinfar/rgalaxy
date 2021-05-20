@@ -15,7 +15,7 @@ pub struct Shar {
 
 impl Shar{
     pub fn pull_by(&mut self, other: &Shar) {
-        let g = 1.0;
+        let g = 0.1;
         let dist = ((self.x - other.x).powi(2)+(self.y - other.y).powi(2)).powf(0.5);
         if dist != 0.0 {
             self.accx += g*other.massa*(other.x - self.x)/dist/dist/dist;
@@ -97,11 +97,11 @@ pub fn generate(times: i32) -> Vec<Shar> {
     let distr = rand_distr::Normal::new(0.0, 1.0).unwrap();
     for _ in 0..times {
         let mut sun = Shar{
-            massa: rng.gen_range(1.0..2.0), 
+            massa: rng.gen_range(15.0..25.0), 
             x: 400.0 + 20.0 * rng.sample(distr), 
             y: 400.0 + 20.0 * rng.sample(distr), 
-            velx: rng.sample(distr)+20.5, 
-            vely: rng.sample(distr)+20.5, 
+            velx: rng.sample(distr)+10.5, 
+            vely: rng.sample(distr)+10.5, 
             accx: 0.0, 
             accy: 0.0
         };
