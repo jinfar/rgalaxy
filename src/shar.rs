@@ -98,14 +98,24 @@ pub fn generate(times: i32) -> Vec<Shar> {
     for _ in 0..times {
         let mut sun = Shar {
             massa: rng.gen_range(15.0..25.0),
-            x: 400.0 + 20.0 * rng.sample(distr),
-            y: 400.0 + 20.0 * rng.sample(distr),
-            velx: rng.sample(distr) + 10.5,
-            vely: rng.sample(distr) + 10.5,
+            x: 700.0 + 100.0 * rng.sample(distr),
+            y: 700.0 + 100.0 * rng.sample(distr),
+            velx: rng.sample(distr) + 1.5,
+            vely: rng.sample(distr) + 1.5,
             accx: 0.0,
             accy: 0.0,
         };
         universe.push(sun);
     }
+    let mut sun = Shar {
+        massa: 60.0,
+        x: 700.0 + 100.0 * rng.sample(distr),
+        y: 700.0 + 100.0 * rng.sample(distr),
+        velx: rng.sample(distr) + 1.5,
+        vely: rng.sample(distr) + 1.5,
+        accx: 0.0,
+        accy: 0.0,
+    };
+    universe.push(sun);
     universe
 }

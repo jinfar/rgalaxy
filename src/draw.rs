@@ -1,6 +1,8 @@
 // const ascii_list: [char; 4] = [" ", ".", ", ", ":"];
 #![allow(unused)]
 // mod shar;
+use plotters::coord::types::RangedCoordf32;
+use plotters::prelude::*;
 
 use crate::shar::{Shar, Uni};
 pub const CHARSET: [char; 10] = [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@'];
@@ -10,7 +12,11 @@ pub const CHARSET_HD: [char; 70] = [
     'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k',
     'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$',
 ];
-const MAX_MASS: f32 = 100f32;
+const MAX_MASS: f32 = 500f32;
+const HEIGHT_KANVAS: u32 = 3200;
+const WIDTH_KANVAS: u32 = 1500;
+const HEI: f32 = HEIGHT_KANVAS as f32;
+const WID: f32 = WIDTH_KANVAS as f32;
 
 pub fn conv(data: Vec<Shar>) -> Vec<[f32; 3]> {
     let mut temp: [f32; 3] = [0.0, 0.0, 0.0];
@@ -42,7 +48,7 @@ pub fn get_brightness(
 }
 
 pub fn get_char(brightness: f32) -> char {
-    let char_set = CHARSET;
+    let char_set = CHARSET_HD;
     if brightness == 0.0 {
         return char_set[0];
     }
@@ -58,7 +64,7 @@ pub fn get_ris(data: Uni) -> Vec<String> {
     let mut itog: Vec<String> = vec![];
     let plot_h_px = 400f32;
     let plot_w_px = 400f32;
-    let plot_h_ch = 200u32;
+    let plot_h_ch = 100u32;
     let plot_w_ch = 50u32;
     let min_y_gr = 0f32;
     let min_x_gr = 0f32;
@@ -83,8 +89,27 @@ pub fn get_ris(data: Uni) -> Vec<String> {
             let cha = get_char(br);
             bukvi.push(cha);
         }
-        let d = format!("{}", bukvi.into_iter().collect::<String>());
+        let d = bukvi.into_iter().collect();
         itog.push(d);
     }
     itog
+}
+pub fn narisui_gif(coord: Vec<Vec<[f32; 3]>>) {
+    let area = BitMapBackend::gif("vivod-r.gif",(HEIGHT_KANVAS, WIDTH_KANVAS), 100)
+        .unwrap()
+        .into_drawing_area();
+    for cadr in coord {
+        area.fill(&WHITE).unwrap();
+        for [x, y, m] in cadr {
+            if x < HEI && x > 0.0 && y < WID && y > 0.0 {
+                area.draw(&Circle::new(
+                        (x as i32, y as i32),
+                        (m - 14.0) as i32 ,
+                        ShapeStyle::from(&BLACK).filled(),
+                        ))
+                    .unwrap();
+                }
+            }
+        area.present().unwrap();
+    }
 }
